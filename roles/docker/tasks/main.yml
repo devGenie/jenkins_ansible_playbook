@@ -1,0 +1,14 @@
+- name: Install docker
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: Add jenkins to docker user group
+  user:
+    name: jenkins
+    groups: docker
+    append: yes
+
+
+
