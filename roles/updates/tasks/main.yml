@@ -5,14 +5,24 @@
       url:  https://pkg.jenkins.io/debian/jenkins-ci.org.key
       state: present
 
-- apt_repository:
-    repo: deb https://pkg.jenkins.io/debian-stable binary
+- name: Add Jenkins to repository
+  apt_repository:
+    repo: deb https://pkg.jenkins.io/debian-stable binary/
     state: present
 
+- name: Install software properties common repository
+  apt:
+    name: software-properties-common
+    state: latest
+    
 # Add java keys
 - name: Add Java repository keys
   apt_repository:
-    repo: 'ppa:webupd8team/java'
+    repo: 'ppa:openjdk-r/ppa'
+
+- name: Set licence as accepted
+  debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+
 
 # Add docker keys
 - name: Import docker CE repository gpg key
@@ -28,12 +38,10 @@
 
 # Update and upgrade the system
 - name: Update system
-  become: true
   apt: 
-    update_cache=yes
+    update_cache: yes
 
 - name: Upgrade installed packages
-  become: true
   apt:
     upgrade: dist
   
