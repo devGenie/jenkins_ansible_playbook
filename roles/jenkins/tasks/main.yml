@@ -1,0 +1,16 @@
+# Install jenkins
+
+- name: Install jenkins
+  apt:
+    name: jenkins
+    state: present
+    update_cache: yes
+
+- name: Copy jenkins password
+  fetch:
+    src: /var/lib/jenkins/secrets/initialAdminPassword
+    dest: downloads/prefix-{{ inventory_hostname }}
+    flat: yes
+    mode: 0774
+    fail_on_missing: yes
+
