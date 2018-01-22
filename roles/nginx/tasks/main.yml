@@ -6,3 +6,21 @@
     state: present
     update_cache: yes
 
+- name: Copy nginx configuration
+  template: 
+    src: templates/jenkins.conf
+    dest: /etc/nginx/sites-available/default
+
+- name: Create symlinks
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  notify:
+    - restart nginx
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
