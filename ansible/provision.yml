@@ -1,4 +1,4 @@
-- hosts: Ansible_demo
+- hosts: all
   user: ubuntu
   become: true
   vars:
