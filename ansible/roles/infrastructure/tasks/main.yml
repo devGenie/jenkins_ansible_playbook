@@ -4,4 +4,10 @@
     dest: /usr/local/bin
     remote_src: yes
 
+- name: install ansible
+  shell: pip install ansible
+  args:
+    executable: /bin/bash
+
+
   
